@@ -1,11 +1,11 @@
 import GameListItem from "./GameListItem";
 
-function GamesList() {
+function GamesList({ savedGamesData }) {
   return (
     <section className="games-list big-box">
-      <GameListItem />
-      <GameListItem />
-      <GameListItem />
+      {savedGamesData.map((game) => (
+        <GameListItem key={game.id} game={game} />
+      ))}
     </section>
   );
 }

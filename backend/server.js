@@ -32,7 +32,6 @@ const proxyOptions = {
     Accept: "application/json",
     "Client-ID": process.env.CLIENT_ID,
     Authorization: process.env.AUTH,
-    body: "game,name",
   },
 };
 

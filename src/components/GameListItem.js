@@ -1,4 +1,7 @@
-function GameListItem() {
+function GameListItem({ game }) {
+  const { name } = game;
+  //const updateDate = new Date(updated_at * 1000).toLocaleDateString();
+
   return (
     <figure className="game-list-item">
       <div>
@@ -8,10 +11,10 @@ function GameListItem() {
         ></img>
       </div>
       <div>
-        <h5>Game title data.name</h5>
+        <h5>{name}</h5>
       </div>
 
-      <div>Last news: date</div>
+      <div>Last update </div>
     </figure>
   );
 }
