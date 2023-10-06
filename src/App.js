@@ -34,7 +34,7 @@ function App() {
               throw new Error("fetch1 error");
             }
             const data = await res.json();
-            singleGameData = data;
+            singleGameData = data[Object.keys(data)[0]].data;
           } catch (err) {
             console.log(err.message);
           }
@@ -47,7 +47,7 @@ function App() {
               throw new Error("fetch2 error");
             }
             const data2 = await res2.json();
-            singleGameData = { ...singleGameData, newsData: data2 };
+            singleGameData = { ...singleGameData, newsData: data2.appnews };
           } catch (err2) {
             console.log(err2.message);
           }
@@ -55,6 +55,7 @@ function App() {
           gamesData.push(singleGameData);
         }
         console.log(gamesData);
+        setSavedGamesData(gamesData);
       }
 
       fetchGamesData();

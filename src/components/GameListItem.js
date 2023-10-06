@@ -1,23 +1,41 @@
 function GameListItem({ game }) {
-  const { name, lastReleaseDate } = game;
-  //const updateDate = new Date(updated_at * 1000).toLocaleDateString();
+  const {
+    name,
+    steam_appid,
+    header_image,
+    newsData: { newsitems },
+  } = game;
+
+  const lastUpdate = newsitems[0];
+  const lastUpdateDate = new Date(lastUpdate.date * 1000).toLocaleDateString();
 
   return (
     <figure className="game-list-item">
-      <div>
-        <img
-          src="https://cdn.akamai.steamstatic.com////steam////apps////1029780////capsule_184x69.jpg?t=1690884674"
-          alt="data.capsule_imagev5"
-        ></img>
-      </div>
-      <div>
-        <h5>{name}</h5>
+      <div className="left-side">
+        <div className="logo">
+          <img src={header_image} alt={`${name} logo`}></img>
+        </div>
+        <div className="title">
+          <h5>{name}</h5>
+        </div>
       </div>
 
-      <div>
-        {lastReleaseDate
-          ? `Last update: ${lastReleaseDate}`
-          : "Sorry, no data 😓"}
+      <div className="right-side">
+        <div className="link">
+          <a href={`https://store.steampowered.com/app/${steam_appid}`}>
+            Steam page
+          </a>
+        </div>
+
+        <div className="date">
+          {lastUpdateDate ? (
+            <>
+              Last update: <br /> {lastUpdateDate}
+            </>
+          ) : (
+            "Sorry, no data 😓"
+          )}
+        </div>
       </div>
     </figure>
   );
