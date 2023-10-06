@@ -42,7 +42,6 @@ header {
 
 .game-list-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 5px;
   margin: 10px 0px;
@@ -53,6 +52,6 @@ header {
     max-width: 100px;
   }
   div {
-    margin-right: 1;
+    width: 33%;
   }
 }

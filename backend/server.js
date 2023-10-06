@@ -9,7 +9,8 @@ require("dotenv").config();
 const PORT = 8000;
 const HOST = "localhost";
 
-const API_URL = "https://api.igdb.com/";
+const API_URL = "https://store.steampowered.com/";
+const API_URL2 = "https://api.steampowered.com/";
 
 app.use(cors());
 
@@ -28,16 +29,18 @@ app.get("/status", (req, res, next) => {
 const proxyOptions = {
   target: API_URL,
   changeOrigin: true,
-  headers: {
-    Accept: "application/json",
-    "Client-ID": process.env.CLIENT_ID,
-    Authorization: process.env.AUTH,
-  },
+};
+
+const proxyOptions2 = {
+  target: API_URL2,
+  changeOrigin: true,
 };
 
 const proxy = createProxyMiddleware(proxyOptions);
+const proxy2 = createProxyMiddleware(proxyOptions2);
 
-app.use("/v4", proxy);
+app.use("/api", proxy);
+app.use("/ISteamNews", proxy2);
 
 app.listen(PORT, HOST, () => {
   console.log(`Proxy Started at ${HOST}:${PORT}`);

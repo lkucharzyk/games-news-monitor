@@ -1,5 +1,5 @@
 function GameListItem({ game }) {
-  const { name } = game;
+  const { name, lastReleaseDate } = game;
   //const updateDate = new Date(updated_at * 1000).toLocaleDateString();
 
   return (
@@ -14,7 +14,11 @@ function GameListItem({ game }) {
         <h5>{name}</h5>
       </div>
 
-      <div>Last update </div>
+      <div>
+        {lastReleaseDate
+          ? `Last update: ${lastReleaseDate}`
+          : "Sorry, no data 😓"}
+      </div>
     </figure>
   );
 }

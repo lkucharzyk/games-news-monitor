@@ -5,10 +5,8 @@ import Search from "./components/Search";
 import GamesList from "./components/GamesList";
 import GameDetails from "./components/GameDetails";
 
-const APIKey = "B143DB1BFAD78F22D9EC882124CD634E";
-
 function App() {
-  const [savedGameIDs, setSavedGameIDs] = useState([169208, 115555, 140669]);
+  const [savedGameIDs, setSavedGameIDs] = useState([323190, 1121640, 1426450]);
   const [savedGamesData, setSavedGamesData] = useState([]);
 
   async function searchInDB(query) {
@@ -21,49 +19,44 @@ function App() {
     console.log(data);
   }
 
-  //fetch data aobut game from user list
   useEffect(() => {
     if (savedGameIDs) {
-      // async function fetchGamesData() {
-      //let incompleteData;
+      //fetch data aobut game from user list
       async function fetchGamesData() {
-        const res = await fetch(`http://localhost:8000/v4/games`, {
-          mode: "cors",
-          method: "POST",
-          body: `fields name,updated_at,release_dates; where id = (${savedGameIDs.join()});`,
-        });
-        const data = await res.json();
+        const gamesData = [];
+        for (const game of savedGameIDs) {
+          let singleGameData;
+          try {
+            const res = await fetch(
+              `http://localhost:8000/api/appdetails?appids=${game}&key=${process.env.API_KEY}`
+            );
+            if (!res.ok) {
+              throw new Error("fetch1 error");
+            }
+            const data = await res.json();
+            singleGameData = data;
+          } catch (err) {
+            console.log(err.message);
+          }
 
-        const releasesIds = data.map((game) => ({
-          title: game.name,
-          releaseID: game.release_dates ? game.release_dates[0] : null,
-        }));
+          try {
+            const res2 = await fetch(
+              `http://localhost:8000/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=10&key=${process.env.API_KEY}&format=json`
+            );
+            if (!res2.ok) {
+              throw new Error("fetch2 error");
+            }
+            const data2 = await res2.json();
+            singleGameData = { ...singleGameData, newsData: data2 };
+          } catch (err2) {
+            console.log(err2.message);
+          }
 
-        const releasesIdsString = releasesIds
-          .filter((id) => id.releaseID !== null)
-          .map((id) => id.releaseID)
-          .join();
-
-        const res2 = await fetch(`http://localhost:8000/v4/release_dates`, {
-          mode: "cors",
-          method: "POST",
-          body: `fields *; where id = (${releasesIdsString});`,
-        });
-        const data2 = await res2.json();
-
-        // console.log(data);
-        // console.log(data2);
-
-        const finalData = data.map((game) => {
-          const releaseDate = data2.filter((date) => date.game === game.id);
-          //console.log(releaseDate[0].human);
-          return {
-            ...game,
-            lastReleaseDate: releaseDate[0] ? releaseDate[0].human : "no data",
-          };
-        });
-        console.log(finalData);
+          gamesData.push(singleGameData);
+        }
+        console.log(gamesData);
       }
+
       fetchGamesData();
     }
   }, [savedGameIDs]);
