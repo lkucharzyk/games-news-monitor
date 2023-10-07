@@ -65,3 +65,23 @@ header {
     }
   }
 }
+
+.loading {
+  display: flex;
+  padding: 10px;
+  margin: auto;
+  img {
+    margin-right: 10px;
+  }
+}
+
+.search-result-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: $pastel-mint;
+  margin: 5px;
+  padding: 5px;
+  .btn {
+    cursor: pointer;
+  }
+}

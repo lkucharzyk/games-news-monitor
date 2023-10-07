@@ -1,7 +1,73 @@
-function Search() {
+import { useState, useEffect, useRef } from "react";
+
+import LoadingSpinner from "./LoadingSpinner";
+import SearchResultItem from "./SearchResultItem";
+
+function Search({ onAddGameToSaved }) {
+  const [gamesList, setGamesList] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [foundGames, setFoundGames] = useState([]);
+
+  const inputEl = useRef(null);
+
+  function clearFoundGames() {
+    setFoundGames([]);
+    inputEl.current.value = "";
+  }
+
+  function search(e) {
+    const query = e.target.value;
+    if (query.length < 3) {
+      setFoundGames([]);
+      return;
+    }
+
+    const found = gamesList.filter((game) =>
+      game.name.toLowerCase().includes(query)
+    );
+    console.log(found);
+    setFoundGames(found);
+  }
+
+  useEffect(() => {
+    async function fetchGamesList() {
+      setIsLoading(true);
+      const res = await fetch(
+        `http://localhost:8000/ISteamApps/GetAppList/v0002/?key=${process.env.API_KEY}&format=json`
+      );
+      const data = await res.json();
+      setGamesList(data.applist.apps);
+      setIsLoading(false);
+    }
+    fetchGamesList();
+  }, []);
+
   return (
     <section className="search">
-      <input type="text" placeholder="Search for games..." />
+      {isLoading && (
+        <LoadingSpinner
+          size={20}
+          message="Preparing game list. This can take few seconds"
+        />
+      )}
+      <input
+        type="text"
+        placeholder="Search for games..."
+        disabled={isLoading}
+        onChange={(e) => search(e)}
+        ref={inputEl}
+      />
+      {foundGames && (
+        <div className="search-results">
+          {foundGames.map((game) => (
+            <SearchResultItem
+              game={game}
+              onAddGameToSaved={onAddGameToSaved}
+              clearFoundGames={clearFoundGames}
+            />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

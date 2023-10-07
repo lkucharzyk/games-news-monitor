@@ -4,25 +4,22 @@ import Header from "./components/Header";
 import Search from "./components/Search";
 import GamesList from "./components/GamesList";
 import GameDetails from "./components/GameDetails";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
   const [savedGameIDs, setSavedGameIDs] = useState([323190, 1121640, 1426450]);
   const [savedGamesData, setSavedGamesData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  async function searchInDB(query) {
-    const res = await fetch(`http://localhost:8000/v4/search`, {
-      mode: "cors",
-      method: "POST",
-      body: `search ${query}; fields name,game;`,
-    });
-    const data = await res.json();
-    console.log(data);
+  function handleAddGameToSaved(id) {
+    setSavedGameIDs((state) => [...state, id]);
   }
 
   useEffect(() => {
     if (savedGameIDs) {
       //fetch data aobut game from user list
       async function fetchGamesData() {
+        setIsLoading(true);
         const gamesData = [];
         for (const game of savedGameIDs) {
           let singleGameData;
@@ -54,8 +51,8 @@ function App() {
 
           gamesData.push(singleGameData);
         }
-        console.log(gamesData);
         setSavedGamesData(gamesData);
+        setIsLoading(false);
       }
 
       fetchGamesData();
@@ -66,10 +63,16 @@ function App() {
     <div className="App">
       <Header />
       <div className="container">
-        <Search />
+        <Search onAddGameToSaved={handleAddGameToSaved} />
         <section className="results">
-          <GamesList savedGamesData={savedGamesData} />
-          <GameDetails />
+          {isLoading ? (
+            <LoadingSpinner size={100} />
+          ) : (
+            <>
+              <GamesList savedGamesData={savedGamesData} />
+              <GameDetails />
+            </>
+          )}
         </section>
       </div>
     </div>

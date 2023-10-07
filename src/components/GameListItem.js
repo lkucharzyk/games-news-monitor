@@ -6,8 +6,10 @@ function GameListItem({ game }) {
     newsData: { newsitems },
   } = game;
 
-  const lastUpdate = newsitems[0];
-  const lastUpdateDate = new Date(lastUpdate.date * 1000).toLocaleDateString();
+  const lastUpdate = newsitems[0] ? newsitems[0] : null;
+  const lastUpdateDate = lastUpdate
+    ? new Date(lastUpdate.date * 1000).toLocaleDateString()
+    : null;
 
   return (
     <figure className="game-list-item">
@@ -33,7 +35,9 @@ function GameListItem({ game }) {
               Last update: <br /> {lastUpdateDate}
             </>
           ) : (
-            "Sorry, no data 😓"
+            <>
+              No updates <br /> data 😓
+            </>
           )}
         </div>
       </div>
