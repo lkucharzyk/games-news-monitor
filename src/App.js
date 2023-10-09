@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import Header from "./components/Header";
 import Search from "./components/Search";
@@ -11,53 +11,66 @@ function App() {
   const [savedGamesData, setSavedGamesData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const initialized = useRef(false);
+
   function handleAddGameToSaved(id) {
+    initialized.current = false;
     setSavedGameIDs((state) => [...state, id]);
   }
 
   useEffect(() => {
-    if (savedGameIDs) {
-      //fetch data aobut game from user list
-      async function fetchGamesData() {
-        setIsLoading(true);
-        const gamesData = [];
-        for (const game of savedGameIDs) {
-          let singleGameData;
-          try {
-            const res = await fetch(
-              `http://localhost:8000/api/appdetails?appids=${game}&key=${process.env.API_KEY}`
-            );
-            if (!res.ok) {
-              throw new Error("fetch1 error");
-            }
-            const data = await res.json();
-            singleGameData = data[Object.keys(data)[0]].data;
-          } catch (err) {
-            console.log(err.message);
-          }
+    if (!initialized.current) {
+      initialized.current = true;
+      if (savedGameIDs) {
+        //fetch data aobut game from user list
+        async function fetchGamesData() {
+          setIsLoading(true);
+          let gamesData = savedGamesData;
 
-          try {
-            const res2 = await fetch(
-              `http://localhost:8000/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=10&key=${process.env.API_KEY}&format=json`
-            );
-            if (!res2.ok) {
-              throw new Error("fetch2 error");
-            }
-            const data2 = await res2.json();
-            singleGameData = { ...singleGameData, newsData: data2.appnews };
-          } catch (err2) {
-            console.log(err2.message);
-          }
+          for (const game of savedGameIDs) {
+            if (gamesData.every((entry) => entry.steam_appid !== game)) {
+              //console.log(`game ${game} fetched`);
+              let singleGameData;
+              try {
+                const res = await fetch(
+                  `http://localhost:8000/api/appdetails?appids=${game}&key=${process.env.API_KEY}`
+                );
+                if (!res.ok) {
+                  throw new Error("fetch1 error");
+                }
+                const data = await res.json();
+                singleGameData = data[Object.keys(data)[0]].data;
+              } catch (err) {
+                console.log(err.message);
+              }
 
-          gamesData.push(singleGameData);
+              try {
+                const res2 = await fetch(
+                  `http://localhost:8000/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=10&key=${process.env.API_KEY}&format=json`
+                );
+                if (!res2.ok) {
+                  throw new Error("fetch2 error");
+                }
+                const data2 = await res2.json();
+                singleGameData = { ...singleGameData, newsData: data2.appnews };
+              } catch (err2) {
+                console.log(err2.message);
+              }
+
+              gamesData.push(singleGameData);
+            } else {
+              //console.log(`game NOT ${game} fetched`);
+            }
+          }
+          // console.log(gamesData);
+          setSavedGamesData(gamesData);
+          setIsLoading(false);
         }
-        setSavedGamesData(gamesData);
-        setIsLoading(false);
-      }
 
-      fetchGamesData();
+        fetchGamesData();
+      }
     }
-  }, [savedGameIDs]);
+  }, [savedGameIDs, savedGamesData]);
 
   return (
     <div className="App">

@@ -61,6 +61,7 @@ function Search({ onAddGameToSaved }) {
         <div className="search-results">
           {foundGames.map((game) => (
             <SearchResultItem
+              key={game.appid + "s"}
               game={game}
               onAddGameToSaved={onAddGameToSaved}
               clearFoundGames={clearFoundGames}
