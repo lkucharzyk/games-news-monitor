@@ -7,7 +7,7 @@ import GameDetails from "./components/GameDetails";
 import LoadingSpinner from "./components/LoadingSpinner";
 
 function App() {
-  const [savedGameIDs, setSavedGameIDs] = useState([323190, 1121640, 1426450]);
+  const [savedGameIDs, setSavedGameIDs] = useState(getIDsFromLocalStorage);
   const [savedGamesData, setSavedGamesData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -18,6 +18,27 @@ function App() {
     setSavedGameIDs((state) => [...state, id]);
   }
 
+  function getIDsFromLocalStorage() {
+    if (localStorage.getItem("savedGameIDs")) {
+      return localStorage.getItem("savedGameIDs").split(",");
+    } else {
+      return [];
+    }
+  }
+
+  // //get items from local storage on start
+  // useEffect(
+  //   () => setSavedGameIDs(Array.from(localStorage.getItem("savedGameIDs"))),
+  //   []
+  // );
+
+  //update local storage
+  useEffect(
+    () => localStorage.setItem("savedGameIDs", savedGameIDs.toString()),
+    [savedGameIDs]
+  );
+
+  //fetching game data
   useEffect(() => {
     if (!initialized.current) {
       initialized.current = true;
