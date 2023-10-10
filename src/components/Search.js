@@ -21,9 +21,8 @@ function Search({ onAddGameToSaved }) {
       setFoundGames([]);
       return;
     }
-
     const found = gamesList.filter((game) =>
-      game.name.toLowerCase().includes(query)
+      game.name.toLowerCase().includes(query.toLowerCase())
     );
     console.log(found);
     setFoundGames(found);
@@ -32,12 +31,19 @@ function Search({ onAddGameToSaved }) {
   useEffect(() => {
     async function fetchGamesList() {
       setIsLoading(true);
-      const res = await fetch(
-        `http://localhost:8000/ISteamApps/GetAppList/v0002/?key=${process.env.API_KEY}&format=json`
-      );
-      const data = await res.json();
-      setGamesList(data.applist.apps);
-      setIsLoading(false);
+      try {
+        const res = await fetch(
+          `http://localhost:8000/ISteamApps/GetAppList/v0002/?key=${process.env.API_KEY}&format=json`
+        );
+        if (!res.ok) {
+          throw new Error("fetch game list error");
+        }
+        const data = await res.json();
+        setGamesList(data.applist.apps);
+        setIsLoading(false);
+      } catch (err) {
+        console.log(err.message);
+      }
     }
     fetchGamesList();
   }, []);

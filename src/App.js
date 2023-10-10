@@ -36,7 +36,7 @@ function App() {
                   `http://localhost:8000/api/appdetails?appids=${game}&key=${process.env.API_KEY}`
                 );
                 if (!res.ok) {
-                  throw new Error("fetch1 error");
+                  throw new Error("fetch app details error");
                 }
                 const data = await res.json();
                 singleGameData = data[Object.keys(data)[0]].data;
@@ -49,7 +49,7 @@ function App() {
                   `http://localhost:8000/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=10&key=${process.env.API_KEY}&format=json`
                 );
                 if (!res2.ok) {
-                  throw new Error("fetch2 error");
+                  throw new Error("fetch app news error");
                 }
                 const data2 = await res2.json();
                 singleGameData = { ...singleGameData, newsData: data2.appnews };
