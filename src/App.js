@@ -12,6 +12,7 @@ function App() {
   const [savedGamesData, setSavedGamesData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [openGame, setOpenGame] = useState(null);
 
   const initialized = useRef(false);
 
@@ -25,6 +26,10 @@ function App() {
         setAlert(null);
       }, 2000);
     }
+  }
+
+  function handleOpenGame(id) {
+    setOpenGame(+id);
   }
 
   function handleRemoveGameFromSaved(id) {
@@ -117,9 +122,16 @@ function App() {
             <>
               <GamesList
                 savedGamesData={savedGamesData}
+                onOpenGame={handleOpenGame}
                 onRemoveGameFromSaved={handleRemoveGameFromSaved}
               />
-              <GameDetails />
+              {openGame && (
+                <GameDetails
+                  game={savedGamesData.filter(
+                    (game) => game.steam_appid === openGame
+                  )}
+                />
+              )}
             </>
           )}
         </section>

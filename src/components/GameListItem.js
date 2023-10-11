@@ -1,4 +1,4 @@
-function GameListItem({ game, onRemoveGameFromSaved }) {
+function GameListItem({ game, onOpenGame, onRemoveGameFromSaved }) {
   const {
     name,
     steam_appid,
@@ -13,7 +13,7 @@ function GameListItem({ game, onRemoveGameFromSaved }) {
 
   return (
     <figure className="game-list-item">
-      <div className="left-side">
+      <div className="left-side" onClick={() => onOpenGame(steam_appid)}>
         <div className="logo">
           <img src={header_image} alt={`${name} logo`}></img>
         </div>
