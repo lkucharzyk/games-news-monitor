@@ -5,17 +5,34 @@ import Search from "./components/Search";
 import GamesList from "./components/GamesList";
 import GameDetails from "./components/GameDetails";
 import LoadingSpinner from "./components/LoadingSpinner";
+import Alert from "./components/Alert";
 
 function App() {
   const [savedGameIDs, setSavedGameIDs] = useState(getIDsFromLocalStorage);
   const [savedGamesData, setSavedGamesData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   const initialized = useRef(false);
 
   function handleAddGameToSaved(id) {
     initialized.current = false;
-    setSavedGameIDs((state) => [...state, id]);
+    if (savedGameIDs.every((entry) => +entry !== +id)) {
+      setSavedGameIDs((state) => [...state, id]);
+    } else {
+      setAlert({ type: "yellow", message: "Game already added" });
+      setTimeout(() => {
+        setAlert(null);
+      }, 2000);
+    }
+  }
+
+  function handleRemoveGameFromSaved(id) {
+    initialized.current = false;
+    setSavedGameIDs((state) => state.filter((entry) => +entry !== +id));
+    setSavedGamesData((state) =>
+      state.filter((entry) => +entry.steam_appid !== +id)
+    );
   }
 
   function getIDsFromLocalStorage() {
@@ -25,12 +42,6 @@ function App() {
       return [];
     }
   }
-
-  // //get items from local storage on start
-  // useEffect(
-  //   () => setSavedGameIDs(Array.from(localStorage.getItem("savedGameIDs"))),
-  //   []
-  // );
 
   //update local storage
   useEffect(
@@ -49,8 +60,8 @@ function App() {
           let gamesData = savedGamesData;
 
           for (const game of savedGameIDs) {
-            if (gamesData.every((entry) => entry.steam_appid !== game)) {
-              //console.log(`game ${game} fetched`);
+            if (gamesData.every((entry) => +entry.steam_appid !== +game)) {
+              console.log(`game ${game} fetched`);
               let singleGameData;
               try {
                 const res = await fetch(
@@ -80,7 +91,7 @@ function App() {
 
               gamesData.push(singleGameData);
             } else {
-              //console.log(`game NOT ${game} fetched`);
+              console.log(`game NOT ${game} fetched`);
             }
           }
           // console.log(gamesData);
@@ -97,13 +108,17 @@ function App() {
     <div className="App">
       <Header />
       <div className="container">
+        {alert && <Alert alert={alert} />}
         <Search onAddGameToSaved={handleAddGameToSaved} />
         <section className="results">
           {isLoading ? (
             <LoadingSpinner size={100} />
           ) : (
             <>
-              <GamesList savedGamesData={savedGamesData} />
+              <GamesList
+                savedGamesData={savedGamesData}
+                onRemoveGameFromSaved={handleRemoveGameFromSaved}
+              />
               <GameDetails />
             </>
           )}

@@ -1,6 +1,7 @@
 $pastel-purple: rgb(248, 204, 248);
 $pastel-mint: rgb(204, 241, 229);
 $pastel-peach: rgb(245, 178, 171);
+$pasetl-yellow: #ffff9e;
 
 * {
   box-sizing: border-box;
@@ -64,6 +65,10 @@ header {
       width: 100%;
     }
   }
+  .remove {
+    text-align: center;
+    cursor: pointer;
+  }
 }
 
 .loading {
@@ -84,4 +89,15 @@ header {
   .btn {
     cursor: pointer;
   }
+}
+
+.search-result-item:nth-child(2n) {
+  background-color: $pastel-purple;
+}
+
+.alert {
+  margin: 7px;
+  padding: 5px;
+  border-radius: 3px;
+  background-color: $pasetl-yellow;
 }

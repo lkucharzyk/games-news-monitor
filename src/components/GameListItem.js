@@ -1,4 +1,4 @@
-function GameListItem({ game }) {
+function GameListItem({ game, onRemoveGameFromSaved }) {
   const {
     name,
     steam_appid,
@@ -39,6 +39,14 @@ function GameListItem({ game }) {
               No updates <br /> data 😓
             </>
           )}
+        </div>
+        <div
+          className="remove"
+          role="button"
+          onClick={() => onRemoveGameFromSaved(steam_appid)}
+        >
+          ❌ <br />
+          Remove
         </div>
       </div>
     </figure>

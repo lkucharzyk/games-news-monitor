@@ -24,7 +24,6 @@ function Search({ onAddGameToSaved }) {
     const found = gamesList.filter((game) =>
       game.name.toLowerCase().includes(query.toLowerCase())
     );
-    console.log(found);
     setFoundGames(found);
   }
 
