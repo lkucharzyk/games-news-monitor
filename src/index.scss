@@ -10,6 +10,11 @@ $pasetl-yellow: #ffff9e;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+a {
+  text-decoration: none;
+  color: blue;
+}
+
 body {
   background-color: $pastel-purple;
 }
@@ -103,4 +108,35 @@ header {
   padding: 5px;
   border-radius: 3px;
   background-color: $pasetl-yellow;
+}
+
+//DETAILS
+
+.games-details {
+  background-color: $pastel-mint;
+  margin: 10px;
+  border-radius: 4px;
+  border: 2px solid rgb(108, 136, 127);
+  .header {
+    text-align: center;
+    img {
+      max-width: 100%;
+    }
+  }
+  .body {
+    h2 {
+      text-align: center;
+    }
+    padding: 10px;
+    .description {
+      padding: 10px 0;
+      font-size: 14px;
+    }
+    ul {
+      list-style: none;
+    }
+    .updates {
+      background-color: $pastel-peach;
+    }
+  }
 }

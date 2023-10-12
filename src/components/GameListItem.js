@@ -24,7 +24,6 @@ function GameListItem({ game, onOpenGame, onRemoveGameFromSaved }) {
       .concat(updatesNews[1])
       .concat(updatesNews[2]);
     const newsSorted = updatesNewsConcat.sort((a, b) => a.date - b.date);
-    console.log(newsSorted);
 
     const lastUpdate = newsSorted[newsSorted.length - 1];
     lastUpdateDate = lastUpdate
