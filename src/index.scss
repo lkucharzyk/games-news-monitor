@@ -1,5 +1,6 @@
 $pastel-purple: rgb(248, 204, 248);
 $pastel-mint: rgb(204, 241, 229);
+$steel-mint: rgb(108, 136, 127);
 $pastel-peach: rgb(245, 178, 171);
 $pasetl-yellow: #ffff9e;
 
@@ -12,7 +13,7 @@ $pasetl-yellow: #ffff9e;
 
 a {
   text-decoration: none;
-  color: blue;
+  color: rgb(182, 97, 88);
 }
 
 body {
@@ -54,7 +55,7 @@ header {
   margin: 10px 0px;
   background-color: $pastel-mint;
   border-radius: 4px;
-  border: 2px solid rgb(108, 136, 127);
+  border: 2px solid $steel-mint;
   div {
     display: flex;
     div {
@@ -116,7 +117,7 @@ header {
   background-color: $pastel-mint;
   margin: 10px;
   border-radius: 4px;
-  border: 2px solid rgb(108, 136, 127);
+  border: 2px solid $steel-mint;
   .header {
     text-align: center;
     img {
@@ -148,8 +149,8 @@ header {
   justify-content: space-between;
   margin: 5px;
   padding: 5px;
-  background-color: $pastel-purple;
-  border: rgb(165, 116, 165) 2px solid;
+  background-color: $pastel-mint;
+  border: $steel-mint 2px solid;
   border-radius: 4px;
   .left-side {
     display: flex;

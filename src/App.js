@@ -34,6 +34,7 @@ function App() {
 
   function handleRemoveGameFromSaved(id) {
     initialized.current = false;
+    setOpenGame(null);
     setSavedGameIDs((state) => state.filter((entry) => +entry !== +id));
     setSavedGamesData((state) =>
       state.filter((entry) => +entry.steam_appid !== +id)
@@ -127,6 +128,9 @@ function App() {
             }
           }
           // console.log(gamesData);
+          gamesData
+            .sort((a, b) => a.newsData[0].date - b.newsData[0].date)
+            .reverse();
           setSavedGamesData(gamesData);
           setIsLoading(false);
         }
