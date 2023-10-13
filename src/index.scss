@@ -136,7 +136,25 @@ header {
       list-style: none;
     }
     .updates {
-      background-color: $pastel-peach;
+      background-color: $pasetl-yellow;
+      padding: 5px;
+      margin: 5px;
+    }
+  }
+}
+
+.update-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px;
+  padding: 5px;
+  background-color: $pastel-purple;
+  border: rgb(165, 116, 165) 2px solid;
+  border-radius: 4px;
+  .left-side {
+    display: flex;
+    p {
+      width: 100px;
     }
   }
 }

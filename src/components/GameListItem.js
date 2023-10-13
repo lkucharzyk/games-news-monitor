@@ -3,7 +3,7 @@ import { useEffect } from "react";
 function GameListItem({ game, onOpenGame, onRemoveGameFromSaved }) {
   const { name, steam_appid, header_image, newsData } = game;
 
-  const lastUpdate = newsData[newsData.length - 1];
+  const lastUpdate = newsData[0];
   const lastUpdateDate = lastUpdate
     ? new Date(lastUpdate.date * 1000).toLocaleDateString()
     : null;

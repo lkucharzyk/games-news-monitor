@@ -1,7 +1,16 @@
+import UpdateItem from "./UpdateItem";
+
 function GameDetails({ game }) {
   console.log(game);
-  const { name, developers, genres, header_image, short_description, website } =
-    game[0];
+  const {
+    name,
+    developers,
+    genres,
+    header_image,
+    short_description,
+    website,
+    newsData,
+  } = game[0];
   return (
     <section className="games-details big-box">
       <div className="header">
@@ -33,9 +42,17 @@ function GameDetails({ game }) {
             </li>
           )}
         </ul>
-        <div className="updates">
-          <h3>Last Updates</h3>
-        </div>
+        {newsData.length > 0 && (
+          <div className="updates">
+            <h3>Last Updates</h3>
+            {newsData.map((news) => (
+              <UpdateItem
+                key={news.gid.toString() + news.date.toString()}
+                data={news}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -66,7 +66,7 @@ function App() {
 
           for (const game of savedGameIDs) {
             if (gamesData.every((entry) => +entry.steam_appid !== +game)) {
-              console.log(`game ${game} fetched`);
+              //console.log(`game ${game} fetched`);
               let singleGameData;
               try {
                 const res = await fetch(
@@ -104,9 +104,14 @@ function App() {
                 const updatesNewsConcat = updatesNews[0]
                   .concat(updatesNews[1])
                   .concat(updatesNews[2]);
-                const sortedNews = updatesNewsConcat.sort(
-                  (a, b) => a.date - b.date
+
+                const duplicatedFiltered = updatesNewsConcat.filter(
+                  (value, index) => updatesNewsConcat.indexOf(value) === index
                 );
+
+                const sortedNews = duplicatedFiltered
+                  .sort((a, b) => a.date - b.date)
+                  .reverse();
 
                 singleGameData = {
                   ...singleGameData,
@@ -118,7 +123,7 @@ function App() {
 
               gamesData.push(singleGameData);
             } else {
-              console.log(`game NOT ${game} fetched`);
+              //console.log(`game NOT ${game} fetched`);
             }
           }
           // console.log(gamesData);
