@@ -1,36 +1,12 @@
 import { useEffect } from "react";
 
 function GameListItem({ game, onOpenGame, onRemoveGameFromSaved }) {
-  const {
-    name,
-    steam_appid,
-    header_image,
-    newsData: { newsitems },
-  } = game;
+  const { name, steam_appid, header_image, newsData } = game;
 
-  //Because the steam API return news without propety if is news update or other stuff, I try to check this by searching strings in the title (which is not perfect, but probably nothing better can be done here)
-  let lastUpdateDate;
-
-  function filterUpdates() {
-    const requiredStrings = ["patch", "fix", "update"];
-    const updatesNews = requiredStrings.map((string) => {
-      const arrays = newsitems.filter((news) =>
-        news.title.toLowerCase().includes(string)
-      );
-      return arrays;
-    });
-
-    const updatesNewsConcat = updatesNews[0]
-      .concat(updatesNews[1])
-      .concat(updatesNews[2]);
-    const newsSorted = updatesNewsConcat.sort((a, b) => a.date - b.date);
-
-    const lastUpdate = newsSorted[newsSorted.length - 1];
-    lastUpdateDate = lastUpdate
-      ? new Date(lastUpdate.date * 1000).toLocaleDateString()
-      : null;
-  }
-  filterUpdates();
+  const lastUpdate = newsData[newsData.length - 1];
+  const lastUpdateDate = lastUpdate
+    ? new Date(lastUpdate.date * 1000).toLocaleDateString()
+    : null;
 
   return (
     <figure className="game-list-item">

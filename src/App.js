@@ -83,13 +83,35 @@ function App() {
 
               try {
                 const res2 = await fetch(
-                  `http://localhost:8000/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=10&key=${process.env.API_KEY}&format=json`
+                  `http://localhost:8000/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=20&key=${process.env.API_KEY}&format=json`
                 );
                 if (!res2.ok) {
                   throw new Error("fetch app news error");
                 }
                 const data2 = await res2.json();
-                singleGameData = { ...singleGameData, newsData: data2.appnews };
+                const unsortedNews = data2.appnews.newsitems;
+
+                //filter news for updates
+                //Because the steam API return news without propety if is news update or other stuff, I try to check this by searching strings in the title (which is not perfect, but probably nothing better can be done here)
+                const requiredStrings = ["patch", "fix", "update"];
+                const updatesNews = requiredStrings.map((string) => {
+                  const arrays = unsortedNews.filter((news) =>
+                    news.title.toLowerCase().includes(string)
+                  );
+                  return arrays;
+                });
+
+                const updatesNewsConcat = updatesNews[0]
+                  .concat(updatesNews[1])
+                  .concat(updatesNews[2]);
+                const sortedNews = updatesNewsConcat.sort(
+                  (a, b) => a.date - b.date
+                );
+
+                singleGameData = {
+                  ...singleGameData,
+                  newsData: sortedNews,
+                };
               } catch (err2) {
                 console.log(err2.message);
               }
