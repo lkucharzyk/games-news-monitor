@@ -13,6 +13,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState(null);
   const [openGame, setOpenGame] = useState(null);
+  const [visitDate, setVisitDate] = useState(getLastVisitDateFromLS);
 
   const initialized = useRef(false);
 
@@ -49,11 +50,35 @@ function App() {
     }
   }
 
+  function getLastVisitDateFromLS() {
+    if (localStorage.getItem("lastVisitDate")) {
+      return localStorage.getItem("lastVisitDate");
+    } else {
+      return null;
+    }
+  }
+
   //update local storage
   useEffect(
     () => localStorage.setItem("savedGameIDs", savedGameIDs.toString()),
     [savedGameIDs]
   );
+
+  //save date of user last visit
+  useEffect(() => {
+    const handleTabClose = (event) => {
+      event.preventDefault();
+
+      const date = Date.now().toString();
+      console.log(date);
+      localStorage.setItem("lastVisitDate", date);
+    };
+    window.addEventListener("beforeunload", handleTabClose);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+    };
+  }, []);
 
   //fetching game data
   useEffect(() => {
@@ -155,6 +180,7 @@ function App() {
                 savedGamesData={savedGamesData}
                 onOpenGame={handleOpenGame}
                 onRemoveGameFromSaved={handleRemoveGameFromSaved}
+                lastVisit={visitDate}
               />
               {openGame && (
                 <GameDetails

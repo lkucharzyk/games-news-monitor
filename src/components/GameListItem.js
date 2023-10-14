@@ -1,9 +1,15 @@
 import { useEffect } from "react";
 
-function GameListItem({ game, onOpenGame, onRemoveGameFromSaved }) {
+function GameListItem({ game, onOpenGame, onRemoveGameFromSaved, lastVisit }) {
   const { name, steam_appid, header_image, newsData } = game;
-
   const lastUpdate = newsData[0];
+  let newsHighlith;
+  if (lastUpdate.date > +lastVisit) {
+    newsHighlith = true;
+  } else {
+    newsHighlith = false;
+  }
+  console.log(newsHighlith);
   const lastUpdateDate = lastUpdate
     ? new Date(lastUpdate.date * 1000).toLocaleDateString()
     : null;
@@ -26,7 +32,7 @@ function GameListItem({ game, onOpenGame, onRemoveGameFromSaved }) {
           </a>
         </div>
 
-        <div className="date">
+        <div className={`date ${newsHighlith ? "highlighted" : ""}`}>
           {lastUpdateDate ? (
             <>
               Last update: <br /> {lastUpdateDate}

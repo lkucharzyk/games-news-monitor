@@ -78,6 +78,20 @@ header {
     text-align: center;
     cursor: pointer;
   }
+
+  .date:after {
+    content: "🆕";
+    display: inline-block;
+    opacity: 0;
+  }
+
+  .date.highlighted {
+    background-color: $pastel-peach;
+    border-radius: 4px;
+    &:after {
+      opacity: 1;
+    }
+  }
 }
 
 .loading {
