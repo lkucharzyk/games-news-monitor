@@ -9,13 +9,12 @@ function GameListItem({ game, onOpenGame, onRemoveGameFromSaved, lastVisit }) {
   } else {
     newsHighlith = false;
   }
-  console.log(newsHighlith);
   const lastUpdateDate = lastUpdate
     ? new Date(lastUpdate.date * 1000).toLocaleDateString()
     : null;
 
   return (
-    <figure className="game-list-item">
+    <figure className="game-list-item box">
       <div className="left-side" onClick={() => onOpenGame(steam_appid)}>
         <div className="logo">
           <img src={header_image} alt={`${name} logo`}></img>

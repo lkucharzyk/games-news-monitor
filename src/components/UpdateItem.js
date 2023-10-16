@@ -1,7 +1,7 @@
 function UpdateItem({ data }) {
   const { date, title, url } = data;
   return (
-    <div className="update-item">
+    <div className="update-item box">
       <div className="left-side">
         <p>{new Date(date * 1000).toLocaleDateString()}</p>
         <h5>{title}</h5>

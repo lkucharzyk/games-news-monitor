@@ -187,6 +187,7 @@ function App() {
                   game={savedGamesData.filter(
                     (game) => game.steam_appid === openGame
                   )}
+                  onClose={setOpenGame}
                 />
               )}
             </>

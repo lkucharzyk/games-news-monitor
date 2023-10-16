@@ -26,6 +26,17 @@ body {
   max-width: 1600px;
 }
 
+.big-box {
+  width: 50%;
+  margin: 10px;
+}
+
+.box {
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
 header {
   background-color: $pastel-mint;
   padding: 20px 0;
@@ -43,19 +54,16 @@ header {
   display: flex;
 }
 
-.big-box {
-  width: 50%;
-}
-
 .game-list-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px;
   margin: 10px 0px;
   background-color: $pastel-mint;
-  border-radius: 4px;
   border: 2px solid $steel-mint;
+  &:first-child {
+    margin-top: 0;
+  }
   div {
     display: flex;
     div {
@@ -129,9 +137,16 @@ header {
 
 .games-details {
   background-color: $pastel-mint;
-  margin: 10px;
   border-radius: 4px;
   border: 2px solid $steel-mint;
+  position: relative;
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    cursor: pointer;
+  }
   .header {
     text-align: center;
     img {
@@ -161,15 +176,67 @@ header {
 .update-item {
   display: flex;
   justify-content: space-between;
-  margin: 5px;
-  padding: 5px;
+  gap: 15px;
   background-color: $pastel-mint;
   border: $steel-mint 2px solid;
-  border-radius: 4px;
   .left-side {
     display: flex;
     p {
       width: 100px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .search {
+    input {
+      width: 100%;
+    }
+  }
+  .results {
+    position: relative;
+    flex-direction: column;
+  }
+  .big-box {
+    width: 100%;
+    margin: 0;
+    margin-top: 10px;
+  }
+  .games-details {
+    position: absolute;
+  }
+}
+
+@media (max-width: 900px) {
+  .search-result-item {
+    gap: 20px;
+    .btn {
+      width: 90px;
+      flex-shrink: 0;
+    }
+  }
+  .game-list-item {
+    .left-side {
+      flex-direction: column;
+      width: 140px;
+    }
+    .right-side {
+      //flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .game-list-item {
+    .right-side {
+      flex-direction: column;
+      font-size: 14px;
+      div {
+        display: block;
+        text-align: center;
+        margin-bottom: 5px;
+      }
     }
   }
 }

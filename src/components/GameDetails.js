@@ -1,7 +1,6 @@
 import UpdateItem from "./UpdateItem";
 
-function GameDetails({ game }) {
-  console.log(game);
+function GameDetails({ game, onClose }) {
   const {
     name,
     developers,
@@ -13,6 +12,9 @@ function GameDetails({ game }) {
   } = game[0];
   return (
     <section className="games-details big-box">
+      <div className="close" role="button" onClick={() => onClose(null)}>
+        ❌
+      </div>
       <div className="header">
         {header_image && <img src={header_image} alt={name} />}
       </div>
