@@ -70,7 +70,6 @@ function App() {
       event.preventDefault();
 
       const date = Date.now().toString();
-      console.log(date);
       localStorage.setItem("lastVisitDate", date);
     };
     window.addEventListener("beforeunload", handleTabClose);
@@ -92,7 +91,6 @@ function App() {
 
           for (const game of savedGameIDs) {
             if (gamesData.every((entry) => +entry.steam_appid !== +game)) {
-              //console.log(`game ${game} fetched`);
               let singleGameData;
               try {
                 const res = await fetch(
@@ -148,11 +146,8 @@ function App() {
               }
 
               gamesData.push(singleGameData);
-            } else {
-              //console.log(`game NOT ${game} fetched`);
             }
           }
-          // console.log(gamesData);
           gamesData
             .sort((a, b) => a.newsData[0].date - b.newsData[0].date)
             .reverse();

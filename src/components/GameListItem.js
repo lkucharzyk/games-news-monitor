@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 function GameListItem({ game, onOpenGame, onRemoveGameFromSaved, lastVisit }) {
   const { name, steam_appid, header_image, newsData } = game;
   const lastUpdate = newsData[0];

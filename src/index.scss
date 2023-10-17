@@ -27,7 +27,7 @@ body {
 }
 
 .big-box {
-  width: 50%;
+  width: calc(50% - 20px);
   margin: 10px;
 }
 
@@ -46,7 +46,7 @@ header {
   background-color: $pastel-peach;
   padding: 15px;
   input {
-    width: 50%;
+    width: calc(50% - 10px);
   }
 }
 
