@@ -25,6 +25,7 @@ function Search({ onAddGameToSaved }) {
       game.name.toLowerCase().includes(query.toLowerCase())
     );
     setFoundGames(found);
+    console.log(found);
   }
 
   useEffect(() => {

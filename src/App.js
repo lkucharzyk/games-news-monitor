@@ -46,7 +46,7 @@ function App() {
     if (localStorage.getItem("savedGameIDs")) {
       return localStorage.getItem("savedGameIDs").split(",");
     } else {
-      return [];
+      return [271590, 1091500, 1245620]; //some games added on start for better app presentation
     }
   }
 
@@ -81,6 +81,7 @@ function App() {
 
   //fetching game data
   useEffect(() => {
+    const baseURL = "http://localhost:8000";
     if (!initialized.current) {
       initialized.current = true;
       if (savedGameIDs) {
@@ -94,7 +95,7 @@ function App() {
               let singleGameData;
               try {
                 const res = await fetch(
-                  `http://localhost:8000/api/appdetails?appids=${game}&key=${process.env.API_KEY}`
+                  `${baseURL}/api/appdetails?appids=${game}&key=${process.env.API_KEY}`
                 );
                 if (!res.ok) {
                   throw new Error("fetch app details error");
@@ -107,40 +108,53 @@ function App() {
 
               try {
                 const res2 = await fetch(
-                  `http://localhost:8000/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=20&key=${process.env.API_KEY}&format=json`
+                  `${baseURL}/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=20&key=${process.env.API_KEY}&format=json`
                 );
                 if (!res2.ok) {
                   throw new Error("fetch app news error");
                 }
                 const data2 = await res2.json();
-                const unsortedNews = data2.appnews.newsitems;
+
+                let unsortedNews;
+                if (data2.appnews.newsitems.length > 0) {
+                  unsortedNews = data2.appnews.newsitems;
+                } else {
+                  unsortedNews = null;
+                }
 
                 //filter news for updates
-                //Because the steam API return news without propety if is news update or other stuff, I try to check this by searching strings in the title (which is not perfect, but probably nothing better can be done here)
-                const requiredStrings = ["patch", "fix", "update"];
-                const updatesNews = requiredStrings.map((string) => {
-                  const arrays = unsortedNews.filter((news) =>
-                    news.title.toLowerCase().includes(string)
+                //Because the steam API return news without propety if is news update or other stuff, I try to check this by searching strings in the title (which is not perfect, but probably nothing better can be done here
+                if (unsortedNews) {
+                  const requiredStrings = ["patch", "fix", "update"];
+                  const updatesNews = requiredStrings.map((string) => {
+                    const arrays = unsortedNews.filter((news) =>
+                      news.title.toLowerCase().includes(string)
+                    );
+                    return arrays;
+                  });
+
+                  const updatesNewsConcat = updatesNews[0]
+                    .concat(updatesNews[1])
+                    .concat(updatesNews[2]);
+
+                  const duplicatedFiltered = updatesNewsConcat.filter(
+                    (value, index) => updatesNewsConcat.indexOf(value) === index
                   );
-                  return arrays;
-                });
 
-                const updatesNewsConcat = updatesNews[0]
-                  .concat(updatesNews[1])
-                  .concat(updatesNews[2]);
+                  const sortedNews = duplicatedFiltered
+                    .sort((a, b) => a.date - b.date)
+                    .reverse();
 
-                const duplicatedFiltered = updatesNewsConcat.filter(
-                  (value, index) => updatesNewsConcat.indexOf(value) === index
-                );
-
-                const sortedNews = duplicatedFiltered
-                  .sort((a, b) => a.date - b.date)
-                  .reverse();
-
-                singleGameData = {
-                  ...singleGameData,
-                  newsData: sortedNews,
-                };
+                  singleGameData = {
+                    ...singleGameData,
+                    newsData: sortedNews,
+                  };
+                } else {
+                  singleGameData = {
+                    ...singleGameData,
+                    newsData: [{ date: 1 }], //fake news for sorting
+                  };
+                }
               } catch (err2) {
                 console.log(err2.message);
               }

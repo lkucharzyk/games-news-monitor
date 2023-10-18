@@ -1,8 +1,14 @@
 function GameListItem({ game, onOpenGame, onRemoveGameFromSaved, lastVisit }) {
   const { name, steam_appid, header_image, newsData } = game;
-  const lastUpdate = newsData[0];
+  let lastUpdate;
+  if (newsData[0].date !== 1) {
+    lastUpdate = newsData[0];
+  } else {
+    lastUpdate = null;
+  }
   let newsHighlith;
-  if (lastUpdate.date > +lastVisit) {
+
+  if (lastUpdate && lastUpdate.date > +lastVisit) {
     newsHighlith = true;
   } else {
     newsHighlith = false;
