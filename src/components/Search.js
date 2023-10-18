@@ -34,7 +34,7 @@ function Search({ onAddGameToSaved }) {
       setIsLoading(true);
       try {
         const res = await fetch(
-          `${baseURL}/ISteamApps/GetAppList/v0002/?key=${process.env.API_KEY}&format=json`
+          `${baseURL}/ISteamApps/GetAppList/v0002/?key=${process.env.REACT_APP_API_KEY}&format=json`
         );
         if (!res.ok) {
           throw new Error("fetch game list error");

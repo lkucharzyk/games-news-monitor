@@ -95,7 +95,7 @@ function App() {
               let singleGameData;
               try {
                 const res = await fetch(
-                  `${baseURL}/api/appdetails?appids=${game}&key=${process.env.API_KEY}`
+                  `${baseURL}/api/appdetails?appids=${game}&key=${process.env.REACT_APP_API_KEY}`
                 );
                 if (!res.ok) {
                   throw new Error("fetch app details error");
@@ -108,7 +108,7 @@ function App() {
 
               try {
                 const res2 = await fetch(
-                  `${baseURL}/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=20&key=${process.env.API_KEY}&format=json`
+                  `${baseURL}/ISteamNews/GetNewsForApp/v0002/?appid=${game}&count=20&key=${process.env.REACT_APP_API_KEY}&format=json`
                 );
                 if (!res2.ok) {
                   throw new Error("fetch app news error");
