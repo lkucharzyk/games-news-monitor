@@ -97,6 +97,7 @@ function App() {
                 const res = await fetch(
                   `${baseURL}/api/appdetails?appids=${game}&key=${process.env.REACT_APP_API_KEY}`
                 );
+                console.log(process.env);
                 if (!res.ok) {
                   throw new Error("fetch app details error");
                 }
