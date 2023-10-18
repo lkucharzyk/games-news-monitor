@@ -19,7 +19,7 @@ app.get("/products/:id", function (req, res, next) {
 });
 
 app.listen(PORT, function () {
-  console.log("CORS-enabled web server listening on port" + PORT);
+  console.log("CORS-enabled web server listening on port");
 });
 
 app.get("/status", (req, res, next) => {
@@ -43,6 +43,6 @@ app.use("/api", proxy);
 app.use("/ISteamNews", proxy2);
 app.use("/ISteamApps", proxy2);
 
-app.listen(PORT, HOST, () => {
-  console.log(`Proxy Started at ${HOST}:${PORT}`);
+app.listen(HOST, () => {
+  console.log(`Proxy Started at ${HOST}`);
 });
