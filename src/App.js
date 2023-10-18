@@ -95,7 +95,7 @@ function App() {
               let singleGameData;
               try {
                 const res = await fetch(
-                  `${baseURL}/api/appdetails?appids=${game}&key=${process.env.REACT_APP_API_KEY}`
+                  `${baseURL}/api/appdetails?appids=${game}&key=${process.env.REACT_APP_API_KEY}&format=json`
                 );
                 console.log(res);
 
