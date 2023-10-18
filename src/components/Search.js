@@ -29,11 +29,12 @@ function Search({ onAddGameToSaved }) {
   }
 
   useEffect(() => {
+    const baseURL = "https://games-updates-monitor.onrender.com";
     async function fetchGamesList() {
       setIsLoading(true);
       try {
         const res = await fetch(
-          `http://localhost:8000/ISteamApps/GetAppList/v0002/?key=${process.env.API_KEY}&format=json`
+          `${baseURL}/ISteamApps/GetAppList/v0002/?key=${process.env.API_KEY}&format=json`
         );
         if (!res.ok) {
           throw new Error("fetch game list error");

@@ -81,7 +81,7 @@ function App() {
 
   //fetching game data
   useEffect(() => {
-    const baseURL = "http://localhost:8000";
+    const baseURL = "https://games-updates-monitor.onrender.com";
     if (!initialized.current) {
       initialized.current = true;
       if (savedGameIDs) {
