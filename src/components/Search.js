@@ -29,7 +29,7 @@ function Search({ onAddGameToSaved }) {
   }
 
   useEffect(() => {
-    const baseURL = "https://games-updates-monitor.onrender.com";
+    const baseURL = "https://games-updates-monitor-backend.onrender.com";
     async function fetchGamesList() {
       setIsLoading(true);
       try {
