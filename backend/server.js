@@ -9,8 +9,8 @@ const cors = require("cors");
 const PORT = 80;
 const HOST = "games-updates-monitor-backend.onrender.com";
 
-const API_URL = "https://store.steampowered.com/";
-const API_URL2 = "https://api.steampowered.com/";
+const API_URL = "https://store.steampowered.com";
+const API_URL2 = "https://api.steampowered.com";
 
 app.use(cors());
 
@@ -39,9 +39,9 @@ const proxyOptions2 = {
 const proxy = createProxyMiddleware(proxyOptions);
 const proxy2 = createProxyMiddleware(proxyOptions2);
 
+app.use("/api", proxy);
 app.use("/ISteamNews", proxy2);
 app.use("/ISteamApps", proxy2);
-app.use("/api", proxy);
 
 app.listen(HOST, () => {
   console.log(`Proxy Started at ${HOST}`);
