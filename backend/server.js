@@ -43,6 +43,6 @@ app.use("/api", proxy);
 app.use("/ISteamNews", proxy2);
 app.use("/ISteamApps", proxy2);
 
-app.listen(HOST, () => {
+app.listen(PORT, HOST, () => {
   console.log(`Proxy Started at ${HOST}`);
 });
