@@ -95,7 +95,7 @@ function App() {
               let singleGameData;
               try {
                 const res = await fetch(
-                  `https://store.steampowered.com/api/appdetails?appids=${game}&key=${process.env.REACT_APP_API_KEY}&format=json`
+                  `${baseURL}/api/appdetails?appids=${game}&key=${process.env.REACT_APP_API_KEY}&format=json`
                 );
 
                 if (!res.ok) {
@@ -104,7 +104,7 @@ function App() {
                 const data = await res.json();
                 singleGameData = data[Object.keys(data)[0]].data;
               } catch (err) {
-                console.log(err);
+                console.log(err.message);
               }
 
               try {
