@@ -2,7 +2,7 @@ function Header() {
   return (
     <header>
       <div className="container">
-        <h1>Game updates monitor</h1>
+        <h1>Games updates monitor</h1>
       </div>
     </header>
   );
