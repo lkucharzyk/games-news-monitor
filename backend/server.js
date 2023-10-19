@@ -28,7 +28,7 @@ app.get("/status", (req, res, next) => {
 
 const proxyOptions = {
   target: API_URL,
-  //changeOrigin: true,
+  changeOrigin: true,
 };
 
 const proxyOptions2 = {
