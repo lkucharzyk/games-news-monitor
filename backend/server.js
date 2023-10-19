@@ -9,7 +9,7 @@ const cors = require("cors");
 const PORT = 443;
 const HOST = "games-updates-monitor-backend.onrender.com";
 
-const API_URL = "https://store.steampowered.com";
+const API_URL = "http://store.steampowered.com";
 const API_URL2 = "https://api.steampowered.com";
 
 app.use(cors());
