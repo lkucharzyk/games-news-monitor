@@ -14,9 +14,9 @@ const API_URL2 = "https://api.steampowered.com/";
 
 app.use(cors());
 
-app.get("/products/:id", function (req, res, next) {
-  res.json({ msg: "This is CORS-enabled for all origins!" });
-});
+// app.get("/products/:id", function (req, res, next) {
+//   res.json({ msg: "This is CORS-enabled for all origins!" });
+// });
 
 app.listen(PORT, function () {
   console.log("CORS-enabled web server listening on port");
@@ -43,6 +43,6 @@ app.use("/api", proxy);
 app.use("/ISteamNews", proxy2);
 app.use("/ISteamApps", proxy2);
 
-app.listen(PORT, HOST, () => {
+app.listen(HOST, () => {
   console.log(`Proxy Started at ${HOST}`);
 });
