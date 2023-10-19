@@ -12,7 +12,7 @@ const HOST = "games-updates-monitor-backend.onrender.com";
 const API_URL = "https://store.steampowered.com/";
 const API_URL2 = "https://api.steampowered.com/";
 
-//app.use(cors());
+app.use(cors());
 
 app.get("/products/:id", function (req, res, next) {
   res.json({ msg: "This is CORS-enabled for all origins!" });
