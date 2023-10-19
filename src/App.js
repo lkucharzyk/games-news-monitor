@@ -104,7 +104,7 @@ function App() {
                 const data = await res.json();
                 singleGameData = data[Object.keys(data)[0]].data;
               } catch (err) {
-                console.log(err.message);
+                console.log(err);
               }
 
               try {
