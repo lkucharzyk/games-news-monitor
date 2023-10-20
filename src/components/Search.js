@@ -45,7 +45,7 @@ function Search({ onAddGameToSaved }) {
         console.log(err.message);
       }
     }
-    //fetchGamesList();
+    fetchGamesList();
   }, []);
 
   return (

@@ -28,7 +28,7 @@ var proxyOptions = {
   target: API_URL,
   changeOrigin: true,
   headers: {
-    host: "onrender.com",
+    Host: "store.steampowered.com",
   },
 };
 
