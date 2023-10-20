@@ -2,7 +2,7 @@
   "name": "game-updates-monitor",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://games-updates-monitor-backend.onrender.com",
+  "proxy": "https://games-updates-monitor-backend.onrender.com",
   "dependencies": {
     "@netlify/functions": "^2.3.0",
     "@testing-library/jest-dom": "^5.17.0",
