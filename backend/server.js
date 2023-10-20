@@ -6,7 +6,7 @@ var cors = require("cors");
 
 //require("dotenv").config();
 
-var PORT = 443;
+var PORT = 80;
 var HOST = "games-updates-monitor-backend.onrender.com";
 
 var API_URL = "https://store.steampowered.com";
@@ -18,7 +18,7 @@ app.get("/products/:id", function (req, res, next) {
   res.json({ msg: "This is CORS-enabled for all origins!" });
 });
 
-app.listen(HOST, function () {
+app.listen(PORT, function () {
   console.log("CORS-enabled web server listening on port");
 });
 
