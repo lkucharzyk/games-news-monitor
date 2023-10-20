@@ -1,16 +1,16 @@
-const express = require("express");
-const { createProxyMiddleware } = require("http-proxy-middleware");
+var express = require("express");
+var { createProxyMiddleware } = require("http-proxy-middleware");
 
-const app = express();
-const cors = require("cors");
+var app = express();
+var cors = require("cors");
 
 //require("dotenv").config();
 
-const PORT = 443;
-const HOST = "games-updates-monitor-backend.onrender.com";
+var PORT = 443;
+var HOST = "games-updates-monitor-backend.onrender.com";
 
-const API_URL = "http://store.steampowered.com";
-const API_URL2 = "https://api.steampowered.com";
+var API_URL = "http://store.steampowered.com";
+var API_URL2 = "https://api.steampowered.com";
 
 app.use(cors());
 
@@ -26,18 +26,18 @@ app.get("/status", (req, res, next) => {
   res.send("This is a proxy service");
 });
 
-const proxyOptions = {
+var proxyOptions = {
   target: API_URL,
   changeOrigin: true,
 };
 
-const proxyOptions2 = {
+var proxyOptions2 = {
   target: API_URL2,
   changeOrigin: true,
 };
 
-const proxy = createProxyMiddleware(proxyOptions);
-const proxy2 = createProxyMiddleware(proxyOptions2);
+var proxy = createProxyMiddleware(proxyOptions);
+var proxy2 = createProxyMiddleware(proxyOptions2);
 
 app.use("/api", proxy);
 app.use("/ISteamNews", proxy2);
