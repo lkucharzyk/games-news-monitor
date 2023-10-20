@@ -28,7 +28,7 @@ var proxyOptions = {
   target: API_URL,
   changeOrigin: true,
   headers: {
-    host: "games-updates-monitor.onrender.com",
+    host: "games-updates-monitor-backend.onrender.com",
   },
 };
 
