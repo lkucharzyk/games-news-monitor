@@ -6,7 +6,7 @@ var cors = require("cors");
 
 //require("dotenv").config();
 
-var PORT = 80;
+var PORT = 443;
 var HOST = "games-updates-monitor-backend.onrender.com";
 
 var API_URL = "https://store.steampowered.com";
