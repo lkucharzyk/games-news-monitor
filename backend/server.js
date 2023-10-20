@@ -18,9 +18,9 @@ app.get("/products/:id", function (req, res, next) {
   res.json({ msg: "This is CORS-enabled for all origins!" });
 });
 
-// app.listen(PORT, function () {
-//   console.log("CORS-enabled web server listening on port");
-// });
+app.listen(HOST, function () {
+  console.log("CORS-enabled web server listening on port");
+});
 
 app.get("/status", (req, res, next) => {
   res.send("This is a proxy service");
