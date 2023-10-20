@@ -39,9 +39,9 @@ var proxyOptions2 = {
 var proxy = createProxyMiddleware(proxyOptions);
 var proxy2 = createProxyMiddleware(proxyOptions2);
 
-app.use("/api", proxy);
-app.use("/ISteamNews", proxy2);
-app.use("/ISteamApps", proxy2);
+app.use("api", proxy);
+app.use("ISteamNews", proxy2);
+app.use("ISteamApps", proxy2);
 
 app.listen(HOST, () => {
   console.log(`Proxy Started at ${HOST}`);
