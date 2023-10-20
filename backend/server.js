@@ -26,7 +26,8 @@ app.get("/status", (req, res, next) => {
 
 var proxyOptions = {
   target: API_URL,
-  changeOrigin: false,
+  changeOrigin: true,
+  xfwd: true,
   headers: {
     Host: "store.steampowered.com",
   },
