@@ -5,7 +5,7 @@ var app = express();
 var cors = require("cors");
 
 var PORT = 443;
-var HOST = "render.com";
+var HOST = "games-updates-monitor-backend.onrender.com";
 
 var API_URL = "https://store.steampowered.com";
 var API_URL2 = "https://api.steampowered.com";
@@ -27,6 +27,9 @@ app.get("/status", (req, res, next) => {
 var proxyOptions = {
   target: API_URL,
   changeOrigin: true,
+  headers: {
+    host: HOST,
+  },
 };
 
 var proxyOptions2 = {
