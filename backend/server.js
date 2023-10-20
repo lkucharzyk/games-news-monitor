@@ -4,12 +4,10 @@ var { createProxyMiddleware } = require("http-proxy-middleware");
 var app = express();
 var cors = require("cors");
 
-//require("dotenv").config();
-
 var PORT = 443;
-var HOST = "games-updates-monitor-backend.onrender.com";
+var HOST = "render.com";
 
-var API_URL = "https://steampowered.com";
+var API_URL = "https://store.steampowered.com";
 var API_URL2 = "https://api.steampowered.com";
 
 app.use(cors());
