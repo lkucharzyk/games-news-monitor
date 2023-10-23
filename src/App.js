@@ -81,7 +81,7 @@ function App() {
 
   //fetching game data
   useEffect(() => {
-    const baseURL = "https://games-updates-monitor-backend.onrender.com";
+    const baseURL = "https://games-updates-monitor-backend.vercel.app";
     if (!initialized.current) {
       initialized.current = true;
       if (savedGameIDs) {

@@ -28,7 +28,7 @@ function Search({ onAddGameToSaved }) {
   }
 
   useEffect(() => {
-    const baseURL = "https://games-updates-monitor-backend.onrender.com";
+    const baseURL = "https://games-updates-monitor-backend.vercel.app";
     async function fetchGamesList() {
       setIsLoading(true);
       try {
