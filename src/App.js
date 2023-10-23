@@ -146,10 +146,17 @@ function App() {
                     .sort((a, b) => a.date - b.date)
                     .reverse();
 
-                  singleGameData = {
-                    ...singleGameData,
-                    newsData: sortedNews,
-                  };
+                  if (sortedNews.length > 0) {
+                    singleGameData = {
+                      ...singleGameData,
+                      newsData: sortedNews,
+                    };
+                  } else {
+                    singleGameData = {
+                      ...singleGameData,
+                      newsData: [{ date: 1 }], //fake news for sorting
+                    };
+                  }
                 } else {
                   singleGameData = {
                     ...singleGameData,
